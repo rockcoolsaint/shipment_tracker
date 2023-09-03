@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Web3Modal from "web3modal";
 import { ethers, Signer } from "ethers";
+import * as dotenv from "dotenv";
+
+dotenv.config()
 
 // INTERNAL IMPORT
 import tracking from "../context/Tracking.json";
-const ContractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+const ContractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 const ContractABI = tracking.abi;
 
+
 // ---FETCHING SMART CONTRACT
-const fetchContract = (SignerOrProvider) =>
-  new ethers.Contract(ContractAddress, ContractABI, SignerOrProvider);
+const fetchContract = (signerOrProvider) =>
+  new ethers.Contract(ContractAddress, ContractABI, signerOrProvider);
 
 export const TrackingContext = React.createContext();
 
@@ -19,9 +23,7 @@ export const TrackingProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState("");
 
   const createShipment = async (items) => {
-    console.log(items);
     const { receiver, pickupTime, distance, price } = items;
-
     try {
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
@@ -34,9 +36,8 @@ export const TrackingProvider = ({ children }) => {
         }
       );
       await createItem.wait();
-      console.log(createItem);
     } catch {
-      console.log("Some want wrong");
+      console.log("Something went wrong");
     }
   };
 
@@ -73,9 +74,10 @@ export const TrackingProvider = ({ children }) => {
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
       const shipmentsCount = await contract.getShipmentsCount(accounts[0]);
+      console.log(shipmentsCount.toNumber());
       return shipmentsCount.toNumber();
     } catch (error) {
-      console.log("error: not getting shipment");
+      console.log("error: not getting shipment", error);
     }
   };
 
@@ -112,7 +114,7 @@ export const TrackingProvider = ({ children }) => {
   };
 
   const getShipment = async (index) => {
-    console.log(index + 1);
+    console.log(index * 1);
     try {
       if (!window.ethereum) return "Install MetaMask";
 
@@ -127,7 +129,7 @@ export const TrackingProvider = ({ children }) => {
       const SingleShipment = {
         sender: shipment[0],
         receiver: shipment[1],
-        pickupTime: shipment[2],
+        pickupTime: shipment[2].toNumber(),
         deliveryTime: shipment[3].toNumber(),
         distance: shipment[4].toNumber(),
         price: ethers.utils.formatEther(shipment[5].toString()),
@@ -165,9 +167,19 @@ export const TrackingProvider = ({ children }) => {
       shipment.wait();
       console.log(shipment);
     } catch (error) {
-      console.log("Sorry no shipment")
+      console.log("Sorry no shipment", error)
     }
   };
+
+  const getAccountBalance = async () => {
+    const provider = new ethers.providers.JsonRpcProvider();
+    const accounts = await window.ethereum.request({
+      method: "eth_accounts",
+    });
+    const balance = provider.getBalance(accounts[0]);
+
+    return balance;
+  }
 
   // ---CHECK WALLET CONNECTED---
   const checkIfWalletConnected = async () => {
@@ -219,6 +231,7 @@ export const TrackingProvider = ({ children }) => {
         getShipmentsCount,
         DappName,
         currentUser,
+        getAccountBalance
       }}
     >
       {children}

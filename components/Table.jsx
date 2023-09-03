@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Table = ({setCreateShipmentModel, allShipmentsData}) => {
+const Table = ({setCreateShipmentModal, allShipmentsData}) => {
   const convertTime = (time) => {
     const newTime = new Date(time);
     const dataTime = new Intl.DateTimeFormat("en-US", {
@@ -25,9 +25,9 @@ const Table = ({setCreateShipmentModel, allShipmentsData}) => {
         </div>
         <div className='mt-3 md:mt-0'>
           <p
-            onClick={() => setCreateShipmentModel(true)}
+            onClick={() => setCreateShipmentModal(true)}
             href="#"
-            className='inline-block px-4 py-2 text-white duration-150 font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 md:text-sm rounded-lg md:inline-flex'
+            className='inline-block px-4 py-2 text-white duration-150 font-medium bg-gray-800 hover:bg-gray-700 active:bg-gray-900 md:text-sm rounded-lg cursor-pointer md:inline-flex'
           >
             Add Tracking
           </p>

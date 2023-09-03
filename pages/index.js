@@ -6,14 +6,14 @@ import React, { useContext, useEffect, useState } from 'react'
 import { CompleteShipment, Form, GetShipment, Profile, Services, Table } from "../components/index";
 
 const index = () => {
-  const { currentUser, createShipment, completeShipment, getAllShipments, getShipment, startShipment, getShipmentsCount,  } = useContext(TrackingContext);
+  const { currentUser, createShipment, completeShipment, getAllShipments, getShipment, startShipment, getShipmentsCount, getAccountBalance } = useContext(TrackingContext);
 
   // STATE VARIABLE
-  const [createShipmentModel, setCreateShipmentModel] = useState(false);
+  const [createShipmentModal, setCreateShipmentModal] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [startModal, setStartModal] = useState(false);
   const [completeModal, setCompleteModal] = useState(false);
-  const [getModel, setGetModel] = useState(false);
+  const [getModal, setGetModal] = useState(false);
   // DATA STATE VARIABLE
   const [allShipmentsData, setAllShipmentsData] = useState();
 
@@ -22,6 +22,7 @@ const index = () => {
     
     return async () => {
       const allData = await getCampaignsData;
+      console.log(allData)
       setAllShipmentsData(allData);
     }
   }, []);
@@ -31,23 +32,24 @@ const index = () => {
       <Services
         setOpenProfile={setOpenProfile}
         setCompleteModal={setCompleteModal}
-        setGetModel={setGetModel}
+        setGetModal={setGetModal}
         setStartModal={setStartModal}
       />
       <Table
-        setCreateShipmentModel={setCreateShipmentModel}
+        setCreateShipmentModal={setCreateShipmentModal}
         allShipmentsData={allShipmentsData}
       />
       <Form
-        createShipmentModel={createShipmentModel}
+        createShipmentModal={createShipmentModal}
         createShipment={createShipment}
-        setCreateShipmentModel={setCreateShipmentModel}
+        setCreateShipmentModal={setCreateShipmentModal}
       />
       <Profile
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
         currentUser={currentUser}
         getShipmentsCount={getShipmentsCount}
+        getAccountBalance={getAccountBalance}
       />
       <CompleteShipment
         completeModal={completeModal}
@@ -55,8 +57,8 @@ const index = () => {
         completeShipment={completeShipment}
       />
       <GetShipment
-        getModel={getModel}
-        setGetModel={setGetModel}
+        getModal={getModal}
+        setGetModal={setGetModal}
         getShipment={getShipment}
       />
       <StartShipment

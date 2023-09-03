@@ -69,7 +69,6 @@ contract Tracking {
         uint256 _price
     ) public payable {
         require(msg.value == _price, "Payment amount must match the price.");
-
         Shipment memory shipment = Shipment(
             msg.sender,
             _receiver,
@@ -187,7 +186,7 @@ contract Tracking {
         );
     }
 
-    function getShipmentCount(address _sender) public view returns (uint256) {
+    function getShipmentsCount(address _sender) public view returns (uint256) {
         return shipments[_sender].length;
     }
 

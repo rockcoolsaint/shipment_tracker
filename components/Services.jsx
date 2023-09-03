@@ -1,7 +1,7 @@
 import images from "../Images/index";
 import Image from 'next/image';
 
-const Service = ({setOpenProfile, setCompleteModal, setGetModel, setStartModal}) => {
+const Service = ({setOpenProfile, setCompleteModal, setGetModal, setStartModal}) => {
   const team = [
     {
       avatar: images.compShipment,
@@ -23,11 +23,11 @@ const Service = ({setOpenProfile, setCompleteModal, setGetModel, setStartModal})
     }
   ];
 
-  const openModelBox = (text) => {
+  const openModalBox = (text) => {
     if (text === 1) {
       setCompleteModal(true);
     } else if (text === 2) {
-      setGetModel(true);
+      setGetModal(true);
     } else if (text === 3) {
       setStartModal(true);
     } else if (text === 4) {
@@ -43,8 +43,8 @@ const Service = ({setOpenProfile, setCompleteModal, setGetModel, setStartModal})
             {team.map((item, i) => (
               <li key={i}>
                 <div
-                  onClick={() => openModelBox(i + 1)}
-                  className="w-full h-60 sm:h-52 md:h-56"
+                  onClick={() => openModalBox(i + 1)}
+                  className="w-full h-60 sm:h-52 md:h-56 cursor-pointer"
                 >
                   <Image
                     src={item.avatar}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Form = ({setCreateShipmentModel, createShipmentModel, createShipment}) => {
+const Form = ({setCreateShipmentModal, createShipmentModal, createShipment}) => {
   const [shipment, setShipment] = useState({
     receiver: "",
     pickupTime: "",
@@ -16,11 +16,11 @@ const Form = ({setCreateShipmentModel, createShipmentModel, createShipment}) => 
     }
   }
 
-  return createShipmentModel ? (
+  return createShipmentModal ? (
     <div className='fixed inset-0 z-10 overflow-y-auto'>
       <div
         className='fixed inset-0 w-full h-full bg-black opacity-40'
-        onClick={() => setCreateShipmentModel(false)}
+        onClick={() => setCreateShipmentModal(false)}
       >
 
       </div>
@@ -29,7 +29,7 @@ const Form = ({setCreateShipmentModel, createShipmentModel, createShipment}) => 
           <div className='flex justify-end'>
             <button
               className='p-2 text-gray-400 rounded-md hover:bg-gray-100'
-              onClick={() => setCreateShipmentModel(false)}
+              onClick={() => setCreateShipmentModal(false)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

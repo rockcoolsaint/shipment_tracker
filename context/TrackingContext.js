@@ -191,7 +191,7 @@ export const TrackingProvider = ({ children }) => {
       });
 
       if (accounts.length) {
-        setCurrentUser(accounts[0]);
+        setCurrentUser(accounts[1]);
       } else {
         return "No account"
       }
@@ -209,7 +209,7 @@ export const TrackingProvider = ({ children }) => {
         method: "eth _requestAccounts",
       });
 
-      setCurrentUser(accounts[0]);
+      setCurrentUser(accounts[1]);
     } catch {
       return "Something went wrong";
     }
